@@ -1391,6 +1391,16 @@ namespace Microsoft.Xna.Framework
 			private set;
 		}
 
+		public static Color TransparentWhite {
+			get;
+			private set;
+		}
+
+		public static Color TransparentBlack {
+			get;
+			private set;
+		}
+
 		#endregion
 
 		#region Internal Properties
@@ -1562,6 +1572,8 @@ namespace Microsoft.Xna.Framework
 			WhiteSmoke= new Color(0xfff5f5f5);
 			Yellow = new Color(0xff00ffff);
 			YellowGreen = new Color(0xff32cd9a);
+			TransparentWhite = new Color(1f, 1f, 1f, 0f);
+			TransparentBlack = new Color(0f, 0f, 0f, 0f);
 		}
 
 		#endregion
