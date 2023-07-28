@@ -1,6 +1,6 @@
 <Project>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net6.0-ios'">
+  <ItemGroup Condition="'$(TargetFramework)' == 'net7.0-ios'">
     <NativeReference Include="..\runtimes\FAudio\ios\FAudio.xcframework">
       <Kind>Static</Kind>
       <SmartLink>False</SmartLink>

@@ -9,28 +9,28 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('windows'))">
-    <TargetFrameworks>netstandard2.0;net6.0;net6.0-windows;net6.0-android</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net7.0;net7.0-windows;net7.0-android</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('osx'))">
-    <TargetFrameworks>netstandard2.0;net6.0;net6.0-ios;net6.0-tvos;net6.0-android</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net7.0;net7.0-ios;net7.0-tvos;net7.0-android</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('Linux'))">
-    <TargetFrameworks>netstandard2.0;net6.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net7.0</TargetFrameworks>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net6.0-android'">
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net7.0-android'">
     <SupportedOSPlatformVersion>21</SupportedOSPlatformVersion>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net6.0-ios' or '$(TargetFramework)' == 'net6.0-tvos'">
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net7.0-ios' or '$(TargetFramework)' == 'net7.0-tvos'">
     <IsBindingProject>true</IsBindingProject>
     <NoBindingEmbedding>true</NoBindingEmbedding>
     <SupportedOSPlatformVersion>11.0</SupportedOSPlatformVersion>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net6.0-windows10.0.19041.0'">
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net7.0-windows10.0.19041.0'">
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
   </PropertyGroup>
 
@@ -43,7 +43,7 @@
     <Message Importance="High" Text="Loaded property overrides from '$(FNASettingsPropsFilePath)'" Condition="Exists('$(FNASettingsPropsFilePath)')" />
   </Target>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net6.0-windows'">
+  <ItemGroup Condition="'$(TargetFramework)' == 'net7.0-windows'">
     <Compile Include="..\lib\ImeSharp\ImeSharp\**\*.cs" Exclude="..\lib\ImeSharp\ImeSharp\obj\**\*.cs" LinkBase="Utilities\ImeSharp" />
   </ItemGroup>
 

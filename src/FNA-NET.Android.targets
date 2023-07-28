@@ -1,6 +1,6 @@
 <Project>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net6.0-android'">
+  <ItemGroup Condition="'$(TargetFramework)' == 'net7.0-android'">
     <EmbeddedNativeLibrary Include="..\runtimes\FAudio\android\arm64-v8a\libFAudio.so" Link="libs\arm64-v8a\libFAudio.so" />
     <EmbeddedNativeLibrary Include="..\runtimes\FAudio\android\x86_64\libFAudio.so" Link="libs\x86_64\libFAudio.so" />
 
@@ -16,7 +16,7 @@
     <EmbeddedNativeLibrary Include="..\runtimes\SDL2\android\x86_64\libmain.so" Link="libs\x86_64\libmain.so" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net6.0-android'">
+  <ItemGroup Condition="'$(TargetFramework)' == 'net7.0-android'">
     <PackageReference Include="SDL2DroidSharp-JBindings" Version="1.0.2" />
   </ItemGroup>
 

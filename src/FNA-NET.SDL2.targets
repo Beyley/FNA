@@ -1,6 +1,6 @@
 <Project>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net6.0' Or '$(TargetFramework)' == 'net6.0-windows'">
+  <ItemGroup Condition="'$(TargetFramework)' == 'net7.0' Or '$(TargetFramework)' == 'net7.0-windows'">
     <Content Include="..\runtimes\SDL2\win-x64\SDL2.dll">
       <Link>runtimes\win-x64\native\SDL2.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -17,7 +17,7 @@
     </Content>
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net6.0-windows10.0.19041.0'">
+  <ItemGroup Condition="'$(TargetFramework)' == 'net7.0-windows10.0.19041.0'">
   
     <Content Include="..\runtimes\SDL2\win10-x64\SDL2.dll">
       <Link>runtimes\win10-x64\native\SDL2.dll</Link>

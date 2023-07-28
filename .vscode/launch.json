@@ -10,7 +10,7 @@
             "request": "launch",
             "preLaunchTask": "buildFNAGame1",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/samples/FNAGame1/bin/Debug/net6.0/FNAGame1.dll",
+            "program": "${workspaceFolder}/samples/FNAGame1/bin/Debug/net7.0/FNAGame1.dll",
             "args": [],
             "cwd": "${workspaceFolder}/samples/FNAGame1",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
@@ -26,7 +26,7 @@
             "request": "launch",
             "preLaunchTask": "buildFNAWinGame1",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/samples/FNAWinGame1/bin/Debug/net6.0-windows/FNAWinGame1.dll",
+            "program": "${workspaceFolder}/samples/FNAWinGame1/bin/Debug/net7.0-windows/FNAWinGame1.dll",
             "args": [],
             "cwd": "${workspaceFolder}/samples/FNAWinGame1",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
@@ -39,9 +39,9 @@
             "request": "launch",
             "preLaunchTask": "buildFNAImGuiDemo",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/samples/FNAImGuiDemo/bin/Debug/net6.0/FNAImGuiDemo.dll",
+            "program": "${workspaceFolder}/samples/FNAImGuiDemo/bin/Debug/net7.0/FNAImGuiDemo.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/samples/FNAImGuiDemo/bin/Debug/net6.0",
+            "cwd": "${workspaceFolder}/samples/FNAImGuiDemo/bin/Debug/net7.0",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
             "stopAtEntry": false

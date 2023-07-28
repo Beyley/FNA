@@ -7,6 +7,12 @@
       "commands": [
         "dotnet-cake"
       ]
+    },
+    "dotnet-mgcb": {
+      "version": "3.8.1.303",
+      "commands": [
+        "mgcb"
+      ]
     }
   }
 }
