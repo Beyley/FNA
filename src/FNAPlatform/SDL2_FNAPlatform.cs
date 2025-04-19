@@ -867,6 +867,9 @@ namespace Microsoft.Xna.Framework
 			SDL.SDL_Event evt;
 			while (SDL.SDL_PollEvent(out evt) == 1)
 			{
+				if (game.HandleSdlEventGEXT(evt))
+					break;
+
 				// Keyboard
 				if (evt.type == SDL.SDL_EventType.SDL_KEYDOWN)
 				{
@@ -1227,9 +1230,9 @@ namespace Microsoft.Xna.Framework
 					}
 				}
 
-				else if (evt.type == SDL.SDL_EventType.SDL_TEXTEDITING) 
+				else if (evt.type == SDL.SDL_EventType.SDL_TEXTEDITING)
 				{
-					unsafe 
+					unsafe
 					{
 						if (sdlImeHandler != null)
 						{
