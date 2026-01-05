@@ -1,12 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
-    <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('windows'))">
-        <TargetFrameworks>net10.0;net10.0-windows;net10.0-android;net10.0-ios;net10.0-tvos</TargetFrameworks>
-    </PropertyGroup>
-    <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('osx'))">
-        <TargetFrameworks>net10.0;net10.0-windows;net10.0-android;net10.0-ios;net10.0-tvos</TargetFrameworks>
-    </PropertyGroup>
-
-    <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('Linux'))">
+    <PropertyGroup>
         <TargetFramework>net10.0</TargetFramework>
     </PropertyGroup>
 
