@@ -840,6 +840,8 @@ namespace Microsoft.Xna.Framework
 			char* charsBuffer = stackalloc char[32]; // SDL_TEXTINPUTEVENT_TEXT_SIZE
 			while (SDL.SDL_PollEvent(out evt))
 			{
+                                if (game.HandleSdlEventGEXT(evt))
+                                    break;
 				// Keyboard
 				if (evt.type == (uint) SDL.SDL_EventType.SDL_EVENT_KEY_DOWN)
 				{

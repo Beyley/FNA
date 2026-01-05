@@ -17,6 +17,8 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input.Touch;
+using SDL3;
+
 #endregion
 
 namespace Microsoft.Xna.Framework
@@ -750,6 +752,11 @@ namespace Microsoft.Xna.Framework
 				);
 				return true;
 			}
+			return false;
+		}
+
+		protected internal virtual bool HandleSdlEventGEXT(SDL.SDL_Event evt)
+		{
 			return false;
 		}
 
