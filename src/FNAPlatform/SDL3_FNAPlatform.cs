@@ -836,12 +836,14 @@ namespace Microsoft.Xna.Framework
 			bool[] textInputControlDown,
 			ref bool textInputSuppress
 		) {
-			SDL.SDL_Event evt;
+			SDLImeHandler sdlImeHandler = game.Window.ImmService as SDLImeHandler;
+
 			char* charsBuffer = stackalloc char[32]; // SDL_TEXTINPUTEVENT_TEXT_SIZE
-			while (SDL.SDL_PollEvent(out evt))
+			while (SDL.SDL_PollEvent(out SDL.SDL_Event evt))
 			{
-                                if (game.HandleSdlEventGEXT(evt))
-                                    break;
+				if (game.HandleSdlEventGEXT(evt))
+					break;
+
 				// Keyboard
 				if (evt.type == (uint) SDL.SDL_EventType.SDL_EVENT_KEY_DOWN)
 				{
@@ -1115,6 +1117,13 @@ namespace Microsoft.Xna.Framework
 				// Text Input
 				else if (evt.type == (uint) SDL.SDL_EventType.SDL_EVENT_TEXT_INPUT && !textInputSuppress)
 				{
+					// Mimic a CompositionEnd event
+					sdlImeHandler?.OnTextComposition(IMEString.Empty, 0);
+
+					if (sdlImeHandler != null)
+						foreach (char c in new IMEString(evt.text.text)) // This way to support emoji.
+							sdlImeHandler.OnTextInput(c, KeyboardUtil.ToXna(c));
+
 					// Based on the SDL2# LPUtf8StrMarshaler
 					int bytes = MeasureStringLength(evt.text.text);
 					if (bytes > 0)
@@ -1139,6 +1148,16 @@ namespace Microsoft.Xna.Framework
 
 				else if (evt.type == (uint) SDL.SDL_EventType.SDL_EVENT_TEXT_EDITING)
 				{
+					if (sdlImeHandler != null)
+					{
+						IMEString compositionText = new(evt.edit.text);
+						if (compositionText.Count > 0)
+						{
+							int cursorPosition = Math.Min(evt.edit.start, compositionText.Count);
+							sdlImeHandler?.OnTextComposition(compositionText, cursorPosition);
+						}
+					}
+
 					int bytes = MeasureStringLength(evt.edit.text);
 					if (bytes > 0)
 					{

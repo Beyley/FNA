@@ -1,4 +1,5 @@
 using System;
+using SDL3;
 
 namespace Microsoft.Xna.Framework.Input
 {
@@ -33,13 +34,13 @@ namespace Microsoft.Xna.Framework.Input
 			if (IsTextInputActive)
 				return;
 
-			FNAPlatform.StartTextInput(WindowHandle);
+			SDL.SDL_StartTextInput(WindowHandle);
 			IsTextInputActive = true;
 		}
 
 		public override void StopTextInput()
 		{
-			FNAPlatform.StopTextInput(WindowHandle);
+			SDL.SDL_StopTextInput(WindowHandle);
 			IsTextInputActive = false;
 		}
 
@@ -48,6 +49,17 @@ namespace Microsoft.Xna.Framework.Input
 			if (!IsTextInputActive)
 				return;
 
+			SDL.SDL_Rect sdlRect = new()
+			{
+				x = rect.X,
+				y = rect.Y,
+				w = rect.Width,
+				h = rect.Height,
+			};
+
+			// TODO: fill in cursor
+			// the offset of the current cursor location relative to rect->x, in window coordinates.
+			SDL.SDL_SetTextInputArea(WindowHandle, ref sdlRect, 0);
 			FNAPlatform.SetTextInputRectangle(WindowHandle, rect);
 		}
 	}

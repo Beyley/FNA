@@ -296,6 +296,7 @@
 		<Compile Include="src\Input\GamePadType.cs" />
 		<Compile Include="src\Input\Keyboard.cs" />
 		<Compile Include="src\Input\KeyboardState.cs" />
+		<Compile Include="src\Input\KeyboardUtil.cs" />
 		<Compile Include="src\Input\Keys.cs" />
 		<Compile Include="src\Input\KeyState.cs" />
 		<Compile Include="src\Input\Mouse.cs" />
