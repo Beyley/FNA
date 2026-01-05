@@ -135,6 +135,15 @@ namespace Microsoft.Xna.Framework
 		}
 
 		/// <summary>
+		/// Transparent white color (R:1,G:1,B:1,A:0).
+		/// </summary>
+		public static Color TransparentWhite
+		{
+			get;
+			private set;
+		}
+
+		/// <summary>
 		/// AliceBlue color (R:240,G:248,B:255,A:255).
 		/// </summary>
 		public static Color AliceBlue
@@ -1423,6 +1432,7 @@ namespace Microsoft.Xna.Framework
 		static Color()
 		{
 			Transparent = new Color(0);
+			TransparentWhite = new Color(0x00ffffff);
 			AliceBlue = new Color(0xfffff8f0);
 			AntiqueWhite = new Color(0xffd7ebfa);
 			Aqua = new Color(0xffffff00);
