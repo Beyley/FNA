@@ -275,6 +275,7 @@ namespace Microsoft.Xna.Framework
 			Mouse.WindowHandle = Window.Handle;
 			TouchPanel.WindowHandle = Window.Handle;
 			TextInputEXT.WindowHandle = Window.Handle;
+			SDLImeHandler.WindowHandle = Window.Handle;
 
 			FrameworkDispatcher.Update();
 

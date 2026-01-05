@@ -22,7 +22,7 @@ namespace Microsoft.Xna.Framework
 
 		[DefaultValue(false)]
 		public abstract bool AllowUserResizing
-		{ 
+		{
 			get;
 			set;
 		}
@@ -83,6 +83,11 @@ namespace Microsoft.Xna.Framework
 		}
 
 		#endregion
+
+		/// <summary>
+		/// IME service to handle text compositions and inputs.
+		/// </summary>
+		public ImmService ImmService { get; internal set; }
 
 		#region Private Variables
 

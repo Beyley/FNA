@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>Microsoft.Xna.Framework</RootNamespace>
     <AssemblyName>FNA</AssemblyName>
-    <LangVersion>4</LangVersion>
+    <LangVersion>7.1</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>True</DebugSymbols>
@@ -346,6 +346,7 @@
     <Compile Include="src\IDrawable.cs" />
     <Compile Include="src\IGameComponent.cs" />
     <Compile Include="src\IGraphicsDeviceManager.cs" />
+    <Compile Include="src\IMEString.cs" />
     <Compile Include="src\Input\Buttons.cs" />
     <Compile Include="src\Input\ButtonState.cs" />
     <Compile Include="src\Input\GamePad.cs" />
@@ -357,12 +358,14 @@
     <Compile Include="src\Input\GamePadThumbSticks.cs" />
     <Compile Include="src\Input\GamePadTriggers.cs" />
     <Compile Include="src\Input\GamePadType.cs" />
+    <Compile Include="src\Input\ImmService.cs" />
     <Compile Include="src\Input\Keyboard.cs" />
     <Compile Include="src\Input\KeyboardState.cs" />
     <Compile Include="src\Input\Keys.cs" />
     <Compile Include="src\Input\KeyState.cs" />
     <Compile Include="src\Input\Mouse.cs" />
     <Compile Include="src\Input\MouseState.cs" />
+    <Compile Include="src\Input\SDLImeHandler.cs" />
     <Compile Include="src\Input\TextInputEXT.cs" />
     <Compile Include="src\Input\Touch\GestureDetector.cs" />
     <Compile Include="src\Input\Touch\GestureSample.cs" />
@@ -398,6 +401,8 @@
     <Compile Include="src\Storage\StorageContainer.cs" />
     <Compile Include="src\Storage\StorageDevice.cs" />
     <Compile Include="src\Storage\StorageDeviceNotConnectedException.cs" />
+    <Compile Include="src\TextCompositionEventArgs.cs" />
+    <Compile Include="src\TextInputEventArgs.cs" />
     <Compile Include="src\TitleContainer.cs" />
     <Compile Include="src\TitleLocation.cs" />
     <Compile Include="src\Utilities\AssemblyHelper.cs" />

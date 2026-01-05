@@ -1,14 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup Condition="$([MSBuild]::IsOSPlatform('windows'))">
-		<TargetFrameworks>netstandard2.0;net10.0;net10.0-windows;net10.0-android;net10.0-ios;net10.0-tvos</TargetFrameworks>
-	</PropertyGroup>
-	<PropertyGroup Condition="$([MSBuild]::IsOSPlatform('osx'))">
-		<TargetFrameworks>netstandard2.0;net10.0;net10.0-windows;net10.0-android;net10.0-ios;net10.0-tvos</TargetFrameworks>
-	</PropertyGroup>
+    <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('windows'))">
+        <TargetFrameworks>net10.0;net10.0-windows;net10.0-android;net10.0-ios;net10.0-tvos</TargetFrameworks>
+    </PropertyGroup>
+    <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('osx'))">
+        <TargetFrameworks>net10.0;net10.0-windows;net10.0-android;net10.0-ios;net10.0-tvos</TargetFrameworks>
+    </PropertyGroup>
 
-	<PropertyGroup Condition="$([MSBuild]::IsOSPlatform('Linux'))">
-		<TargetFrameworks>netstandard2.0;net10.0</TargetFrameworks>
-	</PropertyGroup>
+    <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('Linux'))">
+        <TargetFramework>net10.0</TargetFramework>
+    </PropertyGroup>
 
 	<PropertyGroup>
 		<EnableDefaultItems>false</EnableDefaultItems>
@@ -346,6 +346,11 @@
 		<Compile Include="src\Vector2.cs" />
 		<Compile Include="src\Vector3.cs" />
 		<Compile Include="src\Vector4.cs" />
+		<Compile Include="src\IMEString.cs" />
+		<Compile Include="src\Input\ImmService.cs" />
+		<Compile Include="src\Input\SDLImeHandler.cs" />
+		<Compile Include="src\TextCompositionEventArgs.cs" />
+		<Compile Include="src\TextInputEventArgs.cs" />
 		<Compile Include="lib\SDL2-CS\src\SDL2.cs" />
 		<Compile Include="lib\SDL3-CS\SDL3\SDL3.Legacy.cs" />
 		<Compile Include="lib\FAudio\csharp\FAudio.cs" />

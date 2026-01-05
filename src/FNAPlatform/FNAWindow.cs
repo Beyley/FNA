@@ -101,6 +101,8 @@ namespace Microsoft.Xna.Framework
 			window = nativeWindow;
 			deviceName = display;
 			wantsFullscreen = false;
+
+			ImmService = new Input.SDLImeHandler();
 		}
 
 		#endregion
