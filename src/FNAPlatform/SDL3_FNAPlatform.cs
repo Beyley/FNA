@@ -856,12 +856,14 @@ namespace Microsoft.Xna.Framework
 						{
 							textInputControlDown[textIndex] = true;
 							TextInputEXT.OnTextInput(FNAPlatform.TextInputCharacters[textIndex]);
+							sdlImeHandler?.OnTextInput(FNAPlatform.TextInputCharacters[textIndex], key);
 						}
 						else if ((Keyboard.keys.Contains(Keys.LeftControl) || Keyboard.keys.Contains(Keys.RightControl))
 							&& key == Keys.V)
 						{
 							textInputControlDown[6] = true;
 							TextInputEXT.OnTextInput(FNAPlatform.TextInputCharacters[6]);
+							sdlImeHandler?.OnTextInput(FNAPlatform.TextInputCharacters[6], key);
 							textInputSuppress = true;
 						}
 					}
@@ -871,11 +873,13 @@ namespace Microsoft.Xna.Framework
 						if (FNAPlatform.TextInputBindings.TryGetValue(key, out textIndex))
 						{
 							TextInputEXT.OnTextInput(FNAPlatform.TextInputCharacters[textIndex]);
+							sdlImeHandler?.OnTextInput(FNAPlatform.TextInputCharacters[textIndex], key);
 						}
 						else if ((Keyboard.keys.Contains(Keys.LeftControl) || Keyboard.keys.Contains(Keys.RightControl))
 							&& key == Keys.V)
 						{
 							TextInputEXT.OnTextInput(FNAPlatform.TextInputCharacters[6]);
+							sdlImeHandler?.OnTextInput(FNAPlatform.TextInputCharacters[6], key);
 						}
 					}
 					InputEventEXT.OnKeyDown(key, ref evt);
