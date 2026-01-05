@@ -135,6 +135,11 @@ namespace Microsoft.Xna.Framework
 		}
 
 		/// <summary>
+		/// Transparent color (R:0,G:0,B:0,A:0).
+		/// </summary>
+		public static Color TransparentBlack => Transparent;
+
+		/// <summary>
 		/// Transparent white color (R:1,G:1,B:1,A:0).
 		/// </summary>
 		public static Color TransparentWhite
