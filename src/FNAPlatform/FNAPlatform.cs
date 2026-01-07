@@ -256,7 +256,7 @@ namespace Microsoft.Xna.Framework
 			(char) 9,	// Tab
 			(char) 13,	// Enter
 			(char) 127,	// Delete
-			(char) 22	// Ctrl+V (Paste)
+			(char) 22	// Ctrl+V (Paste),
 		};
 		public static readonly Dictionary<Keys, int> TextInputBindings = new Dictionary<Keys, int>()
 		{
@@ -267,6 +267,14 @@ namespace Microsoft.Xna.Framework
 			{ Keys.Enter,	4 },
 			{ Keys.Delete,	5 }
 			// Ctrl+V is special!
+		};
+
+		public static readonly List<Keys> AlwaysPassthroughKeys = new List<Keys>()
+		{
+			Keys.Left,
+			Keys.Right,
+			Keys.Up,
+			Keys.Down,
 		};
 
 		#endregion

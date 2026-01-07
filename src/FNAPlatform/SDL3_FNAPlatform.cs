@@ -848,6 +848,9 @@ namespace Microsoft.Xna.Framework
 				if (evt.type == (uint) SDL.SDL_EventType.SDL_EVENT_KEY_DOWN)
 				{
 					Keys key = ToXNAKey(ref evt.key.key, ref evt.key.scancode);
+					if (FNAPlatform.AlwaysPassthroughKeys.Contains(key))
+						sdlImeHandler?.OnTextInput('\0', key);
+
 					if (!Keyboard.keys.Contains(key))
 					{
 						Keyboard.keys.Add(key);
