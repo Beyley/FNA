@@ -183,7 +183,7 @@ namespace Microsoft.Xna.Framework
 
 		#region Internal Variables
 
-		internal bool RunApplication;
+		protected internal bool RunApplication;
 
 		#endregion
 
@@ -208,7 +208,7 @@ namespace Microsoft.Xna.Framework
 		private bool suppressDraw;
 		private bool isDisposed;
 
-		private readonly GameTime gameTime;
+		protected readonly GameTime gameTime;
 		private Stopwatch gameTimer;
 		private TimeSpan accumulatedElapsedTime;
 		private long previousTicks = 0;
@@ -348,7 +348,7 @@ namespace Microsoft.Xna.Framework
 		}
 
 		[DebuggerNonUserCode]
-		private void AssertNotDisposed()
+		protected void AssertNotDisposed()
 		{
 			if (isDisposed)
 			{
@@ -403,24 +403,45 @@ namespace Microsoft.Xna.Framework
 			Tick();
 		}
 
-		public void Run()
+		protected void EnsureInitializedGEXT()
 		{
-			AssertNotDisposed();
-
 			if (!hasInitialized)
 			{
 				DoInitialize();
 				hasInitialized = true;
 			}
+		}
+
+		public virtual void Run()
+		{
+			AssertNotDisposed();
+
+			EnsureInitializedGEXT();
 
 			BeginRun();
 			BeforeLoop();
 
-			gameTimer = Stopwatch.StartNew();
 			RunLoop();
 
 			EndRun();
 			AfterLoop();
+		}
+
+		protected void PollEventsGEXT()
+		{
+			FNAPlatform.PollEvents(
+				this,
+				ref currentAdapter,
+				textInputControlDown,
+				ref textInputSuppress
+			);
+		}
+
+		protected bool ConsumeSuppressedDrawGEXT()
+		{
+			bool suppressed = suppressDraw;
+			suppressDraw = false;
+			return suppressed;
 		}
 
 		public void Tick()
@@ -433,126 +454,14 @@ namespace Microsoft.Xna.Framework
 
 			AdvanceElapsedTime();
 
-			if (IsFixedTimeStep)
-			{
-				/* If we are in fixed timestep, we want to wait until the next frame,
-				 * but we don't want to oversleep. Requesting repeated 1ms sleeps and
-				 * seeing how long we actually slept for lets us estimate the worst case
-				 * sleep precision so we don't oversleep the next frame.
-				 */
-				while (accumulatedElapsedTime + worstCaseSleepPrecision < TargetElapsedTime)
-				{
-					System.Threading.Thread.Sleep(1);
-					TimeSpan timeAdvancedSinceSleeping = AdvanceElapsedTime();
-					UpdateEstimatedSleepPrecision(timeAdvancedSinceSleeping);
-				}
-
-				/* Now that we have slept into the sleep precision threshold, we need to wait
-				 * for just a little bit longer until the target elapsed time has been reached.
-				 * SpinWait(1) works by pausing the thread for very short intervals, so it is
-				 * an efficient and time-accurate way to wait out the rest of the time.
-				 */
-				while (accumulatedElapsedTime < TargetElapsedTime)
-				{
-					System.Threading.Thread.SpinWait(1);
-					AdvanceElapsedTime();
-				}
-			}
-
 			// Now that we are going to perform an update, let's poll events.
-			FNAPlatform.PollEvents(
-				this,
-				ref currentAdapter,
-				textInputControlDown,
-				ref textInputSuppress
-			);
+			PollEventsGEXT();
 
-			// Do not allow any update to take longer than our maximum.
-			if (accumulatedElapsedTime > MaxElapsedTime)
-			{
-				accumulatedElapsedTime = MaxElapsedTime;
-			}
-
-			if (IsFixedTimeStep)
-			{
-				gameTime.ElapsedGameTime = TargetElapsedTime;
-				int stepCount = 0;
-
-				// Perform as many full fixed length time steps as we can.
-				while (accumulatedElapsedTime >= TargetElapsedTime)
-				{
-					gameTime.TotalGameTime += TargetElapsedTime;
-					accumulatedElapsedTime -= TargetElapsedTime;
-					stepCount += 1;
-
-					AssertNotDisposed();
-					Update(gameTime);
-				}
-
-				// Every update after the first accumulates lag
-				updateFrameLag += Math.Max(0, stepCount - 1);
-
-				/* If we think we are running slowly, wait
-				 * until the lag clears before resetting it
-				 */
-				if (gameTime.IsRunningSlowly)
-				{
-					if (updateFrameLag == 0)
-					{
-						gameTime.IsRunningSlowly = false;
-					}
-				}
-				else if (updateFrameLag >= 5)
-				{
-					/* If we lag more than 5 frames,
-					 * start thinking we are running slowly.
-					 */
-					gameTime.IsRunningSlowly = true;
-				}
-
-				/* Every time we just do one update and one draw,
-				 * then we are not running slowly, so decrease the lag.
-				 */
-				if (stepCount == 1 && updateFrameLag > 0)
-				{
-					updateFrameLag -= 1;
-				}
-
-				/* Draw needs to know the total elapsed time
-				 * that occured for the fixed length updates.
-				 */
-				gameTime.ElapsedGameTime = TimeSpan.FromTicks(TargetElapsedTime.Ticks * stepCount);
-			}
-			else
-			{
-				// Perform a single variable length update.
-				if (forceElapsedTimeToZero)
-				{
-					/* When ResetElapsedTime is called,
-					 * Elapsed is forced to zero and
-					 * Total is ignored entirely.
-					 * -flibit
-					 */
-					gameTime.ElapsedGameTime = TimeSpan.Zero;
-					forceElapsedTimeToZero = false;
-				}
-				else
-				{
-					gameTime.ElapsedGameTime = accumulatedElapsedTime;
-					gameTime.TotalGameTime += gameTime.ElapsedGameTime;
-				}
-
-				accumulatedElapsedTime = TimeSpan.Zero;
-				AssertNotDisposed();
-				Update(gameTime);
-			}
+			AssertNotDisposed();
+			Update(gameTime);
 
 			// Draw unless the update suppressed it.
-			if (suppressDraw)
-			{
-				suppressDraw = false;
-			}
-			else
+			if (!ConsumeSuppressedDrawGEXT())
 			{
 				/* Draw/EndDraw should not be called if BeginDraw returns false.
 				 * http://stackoverflow.com/questions/4054936/manual-control-over-when-to-redraw-the-screen/4057180#4057180
@@ -613,6 +522,7 @@ namespace Microsoft.Xna.Framework
 
 		protected virtual void EndRun()
 		{
+			OnExiting(this, EventArgs.Empty);
 		}
 
 		protected virtual void LoadContent()
@@ -849,16 +759,18 @@ namespace Microsoft.Xna.Framework
 			drawableComponents.Add(drawable);
 		}
 
-		private void BeforeLoop()
+		protected void BeforeLoop()
 		{
 			currentAdapter = FNAPlatform.RegisterGame(this);
 			IsActive = true;
 
 			// Perform initial check for a touch device
 			TouchPanel.TouchDeviceExists = FNAPlatform.GetTouchCapabilities().IsConnected;
+
+			gameTimer = Stopwatch.StartNew();
 		}
 
-		private void AfterLoop()
+		protected void AfterLoop()
 		{
 			FNAPlatform.UnregisterGame(this);
 		}
@@ -883,15 +795,39 @@ namespace Microsoft.Xna.Framework
 			{
 				Tick();
 			}
-			OnExiting(this, EventArgs.Empty);
 		}
 
-		private TimeSpan AdvanceElapsedTime()
+		protected TimeSpan AdvanceElapsedTime()
 		{
 			long currentTicks = gameTimer.Elapsed.Ticks;
 			TimeSpan timeAdvanced = TimeSpan.FromTicks(currentTicks - previousTicks);
 			accumulatedElapsedTime += timeAdvanced;
 			previousTicks = currentTicks;
+
+			// Do not allow any update to take longer than our maximum.
+			if (accumulatedElapsedTime > MaxElapsedTime)
+			{
+				accumulatedElapsedTime = MaxElapsedTime;
+			}
+
+			// Perform a single variable length update.
+			if (forceElapsedTimeToZero)
+			{
+				/* When ResetElapsedTime is called,
+				 * Elapsed is forced to zero and
+				 * Total is ignored entirely.
+				 * -flibit
+				 */
+				gameTime.ElapsedGameTime = TimeSpan.Zero;
+				forceElapsedTimeToZero = false;
+			}
+			else
+			{
+				gameTime.ElapsedGameTime = accumulatedElapsedTime;
+				gameTime.TotalGameTime += gameTime.ElapsedGameTime;
+			}
+
+			accumulatedElapsedTime = TimeSpan.Zero;
 			return timeAdvanced;
 		}
 
