@@ -63,6 +63,10 @@ namespace Microsoft.Xna.Framework.Graphics
 		#region Internal FNA3D Variables
 
 		internal IntPtr texture;
+		/// <summary>
+		/// If true, this is managed by native code, NOT FNA3D.
+		/// </summary>
+		internal bool _nativeManaged;
 
 		#endregion
 
@@ -70,6 +74,9 @@ namespace Microsoft.Xna.Framework.Graphics
 
 		protected override void Dispose(bool disposing)
 		{
+			if (this._nativeManaged)
+				return;
+
 			if (!IsDisposed)
 			{
 				GraphicsDevice.Textures.RemoveDisposedTexture(this);

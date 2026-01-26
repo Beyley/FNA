@@ -54,7 +54,9 @@ namespace Microsoft.Xna.Framework.Graphics
 			this.Width = width;
 			this.Height = height;
 			this.Format = format;
+
 			this.texture = texture;
+			this._nativeManaged = true;
 		}
 
 		public Texture2D(

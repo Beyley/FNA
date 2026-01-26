@@ -889,24 +889,34 @@ namespace Microsoft.Xna.Framework.Graphics
 			return session;
 		}
 
-		public unsafe Texture2D[]? CreateXrSwapchain(Session session, int width, int height)
+		public unsafe Swapchain? CreateXrSwapchain(Session session, int width, int height, out Texture2D[] textures, out IntPtr swapchainHandleOut)
 		{
+			textures = Array.Empty<Texture2D>();
 			const SurfaceFormat format = SurfaceFormat.ColorSrgbEXT;
 
 			Swapchain swapchain;
 			IntPtr* texturesPtr;
-			Result result = FNA3D.FNA3D_CreateXRSwapchain(GLDevice, format, session.Handle, width, height, (IntPtr)(&texturesPtr), (IntPtr)(&swapchain));
+			IntPtr swapchainHandle;
+			Result result = FNA3D.FNA3D_CreateXRSwapchain(GLDevice, format, session.Handle, width, height, (IntPtr)(&texturesPtr), (IntPtr)(&swapchainHandle), (IntPtr)(&swapchain));
+			swapchainHandleOut = swapchainHandle;
 			if (result != Result.Success)
+			{
 				return null;
+			}
 
 			int textureCount = 1; // TODO: enumerate swapchain to get real texture count
-			Texture2D[] textures = new Texture2D[textureCount];
+			textures = new Texture2D[textureCount];
 			for (int i = 0; i < textureCount; i++)
 			{
 				textures[i] = new Texture2D(this, texturesPtr[i], width, height, format);
 			}
 
-			return textures;
+			return swapchain;
+		}
+
+		public Result DestroyXrSwapchain(Swapchain swapchain, IntPtr swapchainHandle)
+		{
+			return FNA3D.FNA3D_DestroyXRSwapchain(this.GLDevice, swapchain.Handle, swapchainHandle);
 		}
 
 		#endregion

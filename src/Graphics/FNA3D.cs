@@ -444,8 +444,15 @@ namespace Microsoft.Xna.Framework.Graphics
 			int width,
 			int height,
 			IntPtr textures, // FNA3D_Texture ***textures
+			IntPtr swapchainHandle, // void **swapchainHandle
 			IntPtr swapchain // XrSwapchain *swapchain
 		);
+
+		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+		public static extern Result FNA3D_DestroyXRSwapchain(
+			IntPtr device,
+			ulong swapchain,
+			IntPtr swapchainHandle);
 
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern Result FNA3D_CreateXRSession(
