@@ -172,6 +172,14 @@ namespace Microsoft.Xna.Framework.Graphics
 			);
 		}
 
+		public RenderTarget2D(
+			GraphicsDevice graphicsDevice,
+			IntPtr texture,
+			int width,
+			int height,
+			SurfaceFormat format) : base(graphicsDevice, texture, width, height, format)
+		{}
+
 		#endregion
 
 		#region Protected Dispose Method

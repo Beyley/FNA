@@ -889,10 +889,10 @@ namespace Microsoft.Xna.Framework.Graphics
 			return session;
 		}
 
-		public unsafe Swapchain? CreateXrSwapchain(Session session, int width, int height, out Texture2D[] textures, out IntPtr swapchainHandleOut)
+		public unsafe Swapchain? CreateXrSwapchain(Session session, int width, int height, out RenderTarget2D[] textures, out IntPtr swapchainHandleOut)
 		{
-			textures = Array.Empty<Texture2D>();
-			const SurfaceFormat format = SurfaceFormat.ColorSrgbEXT;
+			textures = Array.Empty<RenderTarget2D>();
+			const SurfaceFormat format = SurfaceFormat.Color;
 
 			Swapchain swapchain;
 			IntPtr* texturesPtr;
@@ -904,11 +904,11 @@ namespace Microsoft.Xna.Framework.Graphics
 				return null;
 			}
 
-			int textureCount = 1; // TODO: enumerate swapchain to get real texture count
-			textures = new Texture2D[textureCount];
+			uint textureCount = 3; // TODO: enumerate swapchain to get real texture count
+			textures = new RenderTarget2D[textureCount];
 			for (int i = 0; i < textureCount; i++)
 			{
-				textures[i] = new Texture2D(this, texturesPtr[i], width, height, format);
+				textures[i] = new RenderTarget2D(this, texturesPtr[i], width, height, format);
 			}
 
 			return swapchain;
