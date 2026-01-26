@@ -414,14 +414,19 @@ namespace Microsoft.Xna.Framework.Graphics
 			// Set up the FNA3D Device
 			try
 			{
-				GLDevice = FNA3D.FNA3D_CreateDevice(
-					ref PresentationParameters.parameters,
+				int tries = 3;
+				while (GLDevice == 0 && tries != 0)
+				{
+					GLDevice = FNA3D.FNA3D_CreateDevice(
+						ref PresentationParameters.parameters,
 #if DEBUG
-					1
+						1
 #else
-					0
+						0
 #endif
-				);
+					);
+					tries--;
+				}
 			}
 			catch(Exception e)
 			{
