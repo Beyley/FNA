@@ -28,6 +28,8 @@ namespace Microsoft.Xna.Framework
 		/* Use when something has gone horribly, horribly wrong */
 		public static Action<string> LogError;
 
+		public static Func<string, bool> ErrorFirstChanceHandle;
+
 		#endregion
 
 		#region Private Static Variables
@@ -95,7 +97,9 @@ namespace Microsoft.Xna.Framework
 		{
 			string err = UTF8_ToManaged(msg);
 			LogError(err);
-			throw new InvalidOperationException(err);
+
+			if(ErrorFirstChanceHandle == null || !ErrorFirstChanceHandle(err))
+				throw new InvalidOperationException(err);
 		}
 
 		private static unsafe string UTF8_ToManaged(IntPtr s)
