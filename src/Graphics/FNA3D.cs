@@ -11,6 +11,8 @@
 using System;
 using System.IO;
 using System.Runtime.InteropServices;
+using Silk.NET.OpenXR;
+
 #endregion
 
 namespace Microsoft.Xna.Framework.Graphics
@@ -435,14 +437,21 @@ namespace Microsoft.Xna.Framework.Graphics
 		);
 
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern int FNA3D_CreateXRSwapchain(
+		public static extern Result FNA3D_CreateXRSwapchain(
 			IntPtr device, // FNA3D_Renderer *driverData
 			SurfaceFormat format,
-			IntPtr session,
+			ulong session,
 			int width,
 			int height,
 			IntPtr textures, // FNA3D_Texture ***textures
 			IntPtr swapchain // XrSwapchain *swapchain
+		);
+
+		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+		public static extern Result FNA3D_CreateXRSession(
+			IntPtr device,
+			IntPtr createInfo,
+			IntPtr session
 		);
 
 		#endregion

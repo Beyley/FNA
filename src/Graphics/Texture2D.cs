@@ -43,6 +43,20 @@ namespace Microsoft.Xna.Framework.Graphics
 
 		#region Public Constructors
 
+		internal Texture2D(
+			GraphicsDevice graphicsDevice,
+			IntPtr texture,
+			int width,
+			int height,
+			SurfaceFormat format)
+		{
+			this.GraphicsDevice = graphicsDevice;
+			this.Width = width;
+			this.Height = height;
+			this.Format = format;
+			this.texture = texture;
+		}
+
 		public Texture2D(
 			GraphicsDevice graphicsDevice,
 			int width,

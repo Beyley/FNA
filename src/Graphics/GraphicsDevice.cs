@@ -11,6 +11,8 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using Silk.NET.OpenXR;
+
 #endregion
 
 namespace Microsoft.Xna.Framework.Graphics
@@ -283,7 +285,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
 		#region Private Disposal Variables
 
-		/* 
+		/*
 		 * Use weak GCHandles for the global resources list as we do not
 		 * know when a resource may be disposed and collected. We do not
 		 * want to prevent a resource from being collected by holding a
@@ -875,6 +877,36 @@ namespace Microsoft.Xna.Framework.Graphics
 				data.Length * elementSizeInBytes
 			);
 			handle.Free();
+		}
+
+		public unsafe Session? CreateXrSession(SessionCreateInfo createInfo)
+		{
+			Session session;
+			Result result = FNA3D.FNA3D_CreateXRSession(this.GLDevice, (IntPtr) (&createInfo), (IntPtr) (&session));
+			if (result != Result.Success)
+				return null;
+
+			return session;
+		}
+
+		public unsafe Texture2D[]? CreateXrSwapchain(Session session, int width, int height)
+		{
+			const SurfaceFormat format = SurfaceFormat.ColorSrgbEXT;
+
+			Swapchain swapchain;
+			IntPtr* texturesPtr;
+			Result result = FNA3D.FNA3D_CreateXRSwapchain(GLDevice, format, session.Handle, width, height, (IntPtr)(&texturesPtr), (IntPtr)(&swapchain));
+			if (result != Result.Success)
+				return null;
+
+			int textureCount = 1; // TODO: enumerate swapchain to get real texture count
+			Texture2D[] textures = new Texture2D[textureCount];
+			for (int i = 0; i < textureCount; i++)
+			{
+				textures[i] = new Texture2D(this, texturesPtr[i], width, height, format);
+			}
+
+			return textures;
 		}
 
 		#endregion
@@ -1633,7 +1665,7 @@ namespace Microsoft.Xna.Framework.Graphics
 				);
 			}
 
-			for (int sampler = 0; sampler < modifiedVertexSamplers.Length; sampler += 1) 
+			for (int sampler = 0; sampler < modifiedVertexSamplers.Length; sampler += 1)
 			{
 				if (!modifiedVertexSamplers[sampler])
 				{
