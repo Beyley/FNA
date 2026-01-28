@@ -607,7 +607,7 @@ namespace Microsoft.Xna.Framework.Graphics
 					}
 					else
 					{
-						throw new NotImplementedException("Unhandled render state! " + type);
+						// throw new NotImplementedException("Unhandled render state! " + type);
 					}
 				}
 				if (blendStateChanged)
