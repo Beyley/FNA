@@ -897,7 +897,7 @@ namespace Microsoft.Xna.Framework.Graphics
 		public unsafe Swapchain? CreateXrSwapchain(Session session, int width, int height, out RenderTarget2D[] textures, out IntPtr swapchainHandleOut)
 		{
 			textures = Array.Empty<RenderTarget2D>();
-			const SurfaceFormat format = SurfaceFormat.Color;
+			const SurfaceFormat format = SurfaceFormat.ColorSrgbEXT;
 
 			Swapchain swapchain;
 			IntPtr* texturesPtr;
