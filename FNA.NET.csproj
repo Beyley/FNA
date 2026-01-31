@@ -1,6 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFrameworks>net10.0;net10.0-android</TargetFrameworks>
+        <TargetFrameworks>net10.0</TargetFrameworks>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(AndroidSdkDirectory)' != ''">
+        <TargetFrameworks>$(TargetFrameworks);net10.0-android</TargetFrameworks>
     </PropertyGroup>
 
 	<PropertyGroup>
