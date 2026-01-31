@@ -24,6 +24,7 @@ using System.IO;
 #endregion
 
 #if ANDROID
+using Android.App;
 [assembly:System.Runtime.Versioning.SupportedOSPlatform("Android21.0")]
 #endif
 
@@ -157,7 +158,7 @@ namespace Microsoft.Xna.Framework
 			var path = Path.Combine(TitleLocation.Path, name);
 			if (!File.Exists(path))
 			{
-				var inputStream = Android.App.Application.Context.Assets.Open(name);
+				var inputStream = Application.Context.Assets.Open(name);
 
 				Directory.CreateDirectory(Path.GetDirectoryName(path)); // Ensure subdirectories
 				FileStream s = new FileStream(path, FileMode.OpenOrCreate, FileAccess.ReadWrite);
