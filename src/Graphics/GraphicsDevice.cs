@@ -420,7 +420,7 @@ namespace Microsoft.Xna.Framework.Graphics
 					GLDevice = FNA3D.FNA3D_CreateDevice(
 						ref PresentationParameters.parameters,
 #if DEBUG
-						1
+						(byte)(OperatingSystem.IsAndroid() ? 0 : 1)
 #else
 						0
 #endif
